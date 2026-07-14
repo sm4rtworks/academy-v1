@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SM4RT Academy · Linux Avançado · Aula 2</title>
+<meta name="description" content="Área de membros SM4RT Academy · Linux Avançado com Cesar Brod" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">SM4RT<span>⚡</span>ACADEMY</div>
+  <div class="crumb">Linux Avançado <span class="crumb-sep">›</span> Módulo 1 <span class="crumb-sep">›</span> Aula 2</div>
+  <div class="top-right">
+    <div class="live-chip" title="Live com Cesar Brod">
+      <span class="live-dot"></span> Live qui 20h · Cesar Brod
+    </div>
+    <div class="course-progress" title="Progresso do curso">
+      <div class="cp-bar"><div class="cp-fill" id="courseFill"></div></div>
+      <span id="coursePct">12%</span>
+    </div>
+    <div class="avatar" title="Marcus (assinatura ativa)">M</div>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- ===== Sidebar: módulos ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="course-card">
+      <svg viewBox="0 0 320 120" class="course-cover" aria-hidden="true">
+        <defs>
+          <linearGradient id="gcov" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#1b2233"/><stop offset=".55" stop-color="#3a1c08"/><stop offset="1" stop-color="#FF6A00"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="120" fill="url(#gcov)"/>
+        <text x="18" y="52" font-family="JetBrains Mono" font-size="20" fill="#ffffff" opacity=".95">$ sudo su -</text>
+        <text x="18" y="80" font-family="JetBrains Mono" font-size="13" fill="#ffd9bd" opacity=".85">root@sm4rt:~# _</text>
+        <circle cx="285" cy="30" r="16" fill="rgba(255,255,255,.12)"/>
+        <text x="285" y="36" text-anchor="middle" font-size="17">🐧</text>
+      </svg>
+      <div class="course-card-body">
+        <div class="course-title">Linux Avançado</div>
+        <div class="course-inst">com <b>Cesar Brod</b> · Linux Tips</div>
+      </div>
+    </div>
+    <nav class="modules" id="modules"><!-- gerado por app.js --></nav>
+  </aside>
+
+  <!-- ===== Main: vídeo + toolbox ===== -->
+  <main class="main">
+    <section class="player-wrap">
+      <div class="player-frame">
+        <div id="ytplayer"></div>
+        <!-- checkpoint overlay -->
+        <div class="quiz-overlay" id="quizOverlay" hidden>
+          <div class="quiz-card">
+            <div class="quiz-kicker">⚡ CHECKPOINT · a IA pausou a aula</div>
+            <h3 id="quizQuestion">…</h3>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-feedback" id="quizFeedback"></div>
+          </div>
+        </div>
+      </div>
+      <div class="player-meta">
+        <div>
+          <h1 class="lesson-title">Aula 2: Diretórios do Sistema, a anatomia do Linux</h1>
+          <div class="lesson-sub">Módulo 1 · Arquitetura do Sistema · 12 min · <span class="ai-tag">✨ checkpoints por IA</span></div>
+        </div>
+        <div class="checkpoint-row" id="checkpointRow"></div>
+      </div>
+    </section>
+
+    <!-- Toolbox -->
+    <section class="toolbox">
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="descricao">Descrição</button>
+        <button class="tab" data-tab="materiais">Materiais</button>
+        <button class="tab lab-tab" data-tab="lab">🧪 Lab interativo</button>
+      </div>
+
+      <div class="tab-panel active" id="panel-descricao">
+        <p>Nesta aula, Cesar Brod disseca a árvore de diretórios do Linux: o papel de <code>/bin</code>, <code>/etc</code>, <code>/dev</code>, <code>/proc</code> e por que "tudo é arquivo". Ao final, você será capaz de navegar e diagnosticar qualquer sistema Linux com confiança.</p>
+        <ul class="objectives">
+          <li>Mapear a Filesystem Hierarchy Standard (FHS)</li>
+          <li>Diferenciar binários essenciais e de usuário</li>
+          <li>Entender pseudo-filesystems (<code>/proc</code>, <code>/sys</code>)</li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" id="panel-materiais">
+        <a class="material" href="#" onclick="return false;">📄 Slides: Anatomia do Linux.pdf <span>2,4 MB</span></a>
+        <a class="material" href="#" onclick="return false;">🧾 Cheatsheet: FHS em 1 página.pdf <span>310 KB</span></a>
+        <a class="material" href="#" onclick="return false;">💻 VM de laboratório (OVA) <span>1,8 GB</span></a>
+      </div>
+
+      <div class="tab-panel" id="panel-lab">
+        <div class="lab-head">
+          <div>
+            <div class="lab-kicker">DESAFIO PRÁTICO</div>
+            <h3>Encontre os arquivos gigantes 🕵️</h3>
+            <p>O servidor está sem espaço. Escreva um comando que encontre arquivos <b>maiores que 100&nbsp;MB</b> a partir da raiz <code>/</code>.</p>
+          </div>
+          <div class="streak" id="streak" title="Sequência de acertos">🔥 <b id="streakN">0</b></div>
+        </div>
+        <textarea id="labEditor"># digite seu comando aqui</textarea>
+        <div class="lab-actions">
+          <button class="btn btn-primary" id="runBtn">▶ Executar</button>
+          <button class="btn btn-ghost" id="hintBtn">💡 Dica</button>
+        </div>
+        <pre class="terminal" id="terminal">sm4rt@lab:~$ aguardando comando…</pre>
+      </div>
+    </section>
+
+    <div class="lesson-footer">
+      <label class="done-toggle">
+        <input type="checkbox" id="doneToggle" />
+        <span>Marcar como concluída</span>
+      </label>
+      <button class="btn btn-primary btn-next" id="nextBtn" disabled title="Conclua a aula para avançar">Próxima aula →</button>
+    </div>
+  </main>
+
+  <!-- ===== Notetaker ===== -->
+  <aside class="notes" id="notesPanel">
+    <div class="notes-head">
+      <div class="notes-title">📝 Minhas anotações</div>
+      <div class="notes-status" id="saveStatus">Salvo ✓</div>
+    </div>
+    <div class="notes-actions">
+      <button class="chip-btn" id="tsBtn" title="Inserir marcador no tempo atual do vídeo">⏱ Momento</button>
+      <button class="chip-btn ai" id="aiBtn" title="Resumo gerado por IA">✨ Resumir aula</button>
+      <button class="chip-btn" id="mdBtn" title="Exportar anotações em Markdown">⬇ .md</button>
+    </div>
+    <div id="editorjs" class="editor-canvas"></div>
+    <div class="notes-tip">Digite <kbd>/</kbd> para blocos: títulos, checklists, código…</div>
+  </aside>
+
+</div>
+
+<!-- libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/shell/shell.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.30.7/dist/editorjs.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/header@2.8.8/dist/header.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/list@2.0.6/dist/editorjs-list.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@1.6.0/dist/checklist.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@2.7.6/dist/quote.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/code@2.9.3/dist/code.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/marker@1.4.0/dist/marker.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@editorjs/inline-code@1.5.1/dist/inline-code.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
